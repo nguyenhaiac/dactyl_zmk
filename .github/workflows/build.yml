@@ -21,38 +21,29 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /__w/dactyl_zmk/dactyl_zmk/modules
-          key: west-modules-${{ hashFiles('config/west.yml') }}-v1
-          restore-keys: |
-            west-modules-v1
+          key: west-modules-${{ hashFiles('config/west.yml') }}
+          restore-keys: west-modules-
 
       - name: Build
         shell: sh -ex {0}
         run: |
-          export ZMK_BUILD_DIR="/__w/dactyl_zmk/dactyl_zmk/build"
-          mkdir -p "$ZMK_BUILD_DIR"
-
-          if [ -f config/west.yml ]; then
-            west init -l config
-          else
-            west init -l config \
-              --mf west.yml \
-              --mr zmk
-          fi
-
+          west init -l config
           west update -o=--depth=1 -n
           west zephyr-export
 
-          west build -s zmk/app -d "$ZMK_BUILD_DIR/left"  -b nice_nano_v2 -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config"
-          west build -s zmk/app -d "$ZMK_BUILD_DIR/right" -b nice_nano_v2 -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config" -DZMK_EXTRA_FLAGS="-DCONFIG_ZMK_SPLIT_BLE_ROLE_CENTRAL=n"
+          west build -s zmk/app -b nice_nano_v2 \
+            -d build/left \
+            -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config"
 
-      - name: Archive left firmware
+          west build -s zmk/app -b nice_nano_v2 \
+            -d build/right \
+            -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config" \
+            -DZMK_EXTRA_FLAGS="-DCONFIG_ZMK_SPLIT_BLE_ROLE_CENTRAL=n"
+
+      - name: Archive firmware
         uses: actions/upload-artifact@v4
         with:
-          name: dactyl_zmk_left
-          path: build/left/zephyr/zmk.uf2
-
-      - name: Archive right firmware
-        uses: actions/upload-artifact@v4
-        with:
-          name: dactyl_zmk_right
-          path: build/right/zephyr/zmk.uf2
+          name: firmware
+          path: |
+            build/left/zephyr/zmk.uf2
+            build/right/zephyr/zmk.uf2
