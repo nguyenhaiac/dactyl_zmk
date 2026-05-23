@@ -33,12 +33,11 @@ jobs:
 
           west build -s zmk/app -b nice_nano_v2 \
             -d build/left \
-            -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config"
+            -- -DSHIELD=dactyl_zmk_left -DZMK_CONFIG="$(pwd)/config"
 
           west build -s zmk/app -b nice_nano_v2 \
             -d build/right \
-            -- -DSHIELD=dactyl_zmk -DZMK_CONFIG="$(pwd)/config" \
-            -DZMK_EXTRA_FLAGS="-DCONFIG_ZMK_SPLIT_BLE_ROLE_CENTRAL=n"
+            -- -DSHIELD=dactyl_zmk_right -DZMK_CONFIG="$(pwd)/config"
 
       - name: Archive firmware
         uses: actions/upload-artifact@v4

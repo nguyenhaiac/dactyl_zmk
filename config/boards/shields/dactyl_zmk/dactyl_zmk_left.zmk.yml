@@ -1,6 +1,6 @@
 file_format: "1"
-id: dactyl_zmk
-name: Dactyl ZMK
+id: dactyl_zmk_left
+name: Dactyl ZMK Left
 type: shield
 url: https://github.com/nguyenhaiac/dactyl_zmk
 requires: [nice_nano_v2]
