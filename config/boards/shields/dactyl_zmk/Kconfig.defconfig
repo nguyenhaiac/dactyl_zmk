@@ -1,0 +1,12 @@
+if SHIELD_DACTYL_ZMK
+
+config ZMK_KEYBOARD_NAME
+    default "Dactyl ZMK"
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif

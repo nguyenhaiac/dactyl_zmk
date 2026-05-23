@@ -1,0 +1,2 @@
+// Board-specific overrides for dactyl_zmk shield
+// Both halves use the same pin mapping defined in dactyl_zmk.dtsi
