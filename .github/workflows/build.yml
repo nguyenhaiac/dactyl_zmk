@@ -10,39 +10,4 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: docker.io/zmkfirmware/zmk-build-arm:stable
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Cache west modules
-        uses: actions/cache@v4
-        with:
-          path: /__w/dactyl_zmk/dactyl_zmk/modules
-          key: west-modules-${{ hashFiles('config/west.yml') }}
-          restore-keys: west-modules-
-
-      - name: Build
-        shell: sh -ex {0}
-        run: |
-          west init -l config
-          west update -o=--depth=1 -n
-          west zephyr-export
-
-          west build -s zmk/app -b nice_nano_v2 \
-            -d build/left -S studio-rpc-usb-uart \
-            -- -DSHIELD=dactyl_zmk_left -DZMK_CONFIG="$(pwd)/config"
-
-          west build -s zmk/app -b nice_nano_v2 \
-            -d build/right \
-            -- -DSHIELD=dactyl_zmk_right -DZMK_CONFIG="$(pwd)/config"
-
-      - name: Archive firmware
-        uses: actions/upload-artifact@v4
-        with:
-          name: firmware
-          path: |
-            build/left/zephyr/zmk.uf2
-            build/right/zephyr/zmk.uf2
+    uses: zmkfirmware/zmk-config/.github/workflows/build-user-config.yml@v0.3
