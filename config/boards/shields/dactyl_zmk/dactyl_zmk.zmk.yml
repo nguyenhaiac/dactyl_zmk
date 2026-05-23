@@ -9,5 +9,5 @@ features:
   - studio
   - underglow
 siblings:
-  - sofle_ergomech_left
-  - sofle_ergomech_right
+  - dactyl_zmk_left
+  - dactyl_zmk_right
