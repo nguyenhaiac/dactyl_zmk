@@ -1,20 +1,14 @@
 if SHIELD_DACTYL_ZMK_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "Dactyl ZMK Left"
-
-config ZMK_SPLIT
-    default y
+    default "Dactyl ZMK"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
-if SHIELD_DACTYL_ZMK_RIGHT
-
-config ZMK_KEYBOARD_NAME
-    default "Dactyl ZMK Right"
+if SHIELD_DACTYL_ZMK_LEFT || SHIELD_DACTYL_ZMK_RIGHT
 
 config ZMK_SPLIT
     default y
