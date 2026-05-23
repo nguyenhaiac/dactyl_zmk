@@ -32,7 +32,7 @@ jobs:
           west zephyr-export
 
           west build -s zmk/app -b nice_nano_v2 \
-            -d build/left \
+            -d build/left -S studio-rpc-usb-uart \
             -- -DSHIELD=dactyl_zmk_left -DZMK_CONFIG="$(pwd)/config"
 
           west build -s zmk/app -b nice_nano_v2 \
